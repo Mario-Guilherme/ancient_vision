@@ -39,6 +39,8 @@ image bilinear_resize(image im, int w, int h);
 
 // Filtering
 image convolve_image(image im, image filter, int preserve);
+void image_normalize(image im);
+void image_abs(image im);
 image make_box_filter(int w);
 image make_highpass_filter();
 image make_sharpen_filter();

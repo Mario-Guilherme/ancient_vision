@@ -160,8 +160,18 @@ image make_highpass_filter()
 
 image make_sharpen_filter()
 {
-    // TODO
-    return make_image(1,1,1);
+     image sharpen = make_image(3, 3, 1);
+
+    for (int i = 0; i < 3*3; i++)
+        sharpen.data[i] = 0;
+
+    set_pixel(sharpen, 0, 1, 0, -1);
+    set_pixel(sharpen, 1, 0, 0, -1);
+    set_pixel(sharpen, 1, 1, 0,  5);
+    set_pixel(sharpen, 1, 2, 0, -1);
+    set_pixel(sharpen, 2, 1, 0, -1);
+
+    return sharpen;
 }
 
 image make_emboss_filter()
