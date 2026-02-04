@@ -57,6 +57,8 @@ image convolve_image(image im, image filter, int preserve)
     // get_pixel está usando a estragédia clamp
     // também é necessário centralizar o centro do kernel com o pixel selecionado, então é preciso pegar as coordenadas
     // do centro do kernel e assim aplicar a cross correlation
+    // tirei de Computer Vision - Algorithms and Applications 2nd Edition, Richard Szeliski. Cap 3.2
+
 
     assert(im.c == filter.c || filter.c == 1);
 
@@ -110,11 +112,50 @@ image convolve_image(image im, image filter, int preserve)
     return out;
 }
 
+void image_abs(image im)
+{
+    for (int i = 0; i < im.h * im.w * im.c; i++)
+        im.data[i] = fabs(im.data[i]);
+}
+
+void image_normalize(image im)
+{
+    float min = im.data[0];
+    float max = im.data[0];
+
+    for (int i = 0; i < im.h * im.w * im.c; i++) {
+        if (im.data[i] < min) min = im.data[i];
+        if (im.data[i] > max) max = im.data[i];
+    }
+
+    float range = max - min;
+    if (range == 0) return;
+
+    for (int i = 0; i < im.h * im.w * im.c; i++)
+        im.data[i] = (im.data[i] - min) / range;
+}
 
 image make_highpass_filter()
 {
-    // TODO
-    return make_image(1,1,1);
+    //o kenel de highpass é do seguinte formato
+    //    0 -1  0
+    //   -1  4 -1
+    //    0 -1  0   3x3
+    // depois setar os valores,esse kernel é responsável por mostrar as bordas
+    image highpass = make_image(3, 3, 1);
+
+    for (int i = 0; i < 3*3; i++)
+        highpass.data[i] = 0;
+
+    set_pixel(highpass, 0, 1, 0, -1);
+    set_pixel(highpass, 1, 0, 0, -1);
+    set_pixel(highpass, 1, 1, 0,  4);
+    set_pixel(highpass, 1, 2, 0, -1);
+    set_pixel(highpass, 2, 1, 0, -1);
+
+
+
+    return highpass;
 }
 
 image make_sharpen_filter()
