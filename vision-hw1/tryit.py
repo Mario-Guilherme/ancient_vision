@@ -12,3 +12,7 @@ im = load_image("data/dog.jpg")
 a = nn_resize(im, im.w//7, im.h//7)
 save_image(a, "dog7th-bl")
 
+im = load_image("data/dog.jpg")
+f = make_box_filter(7)
+blur = convolve_image(im, f, 1)
+save_image(blur, "dog-box7")
