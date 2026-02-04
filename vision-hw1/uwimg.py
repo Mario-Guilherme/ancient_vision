@@ -144,6 +144,14 @@ convolve_image = lib.convolve_image
 convolve_image.argtypes = [IMAGE, IMAGE, c_int]
 convolve_image.restype = IMAGE
 
+image_abs = lib.image_abs
+image_abs.argtypes = [IMAGE]
+image_abs.restype = None
+
+image_normalize =lib.image_normalize
+image_normalize.argtypes = [IMAGE]
+image_normalize.restype = None
+
 
 if __name__ == "__main__":
     im = load_image("data/dog.jpg")
