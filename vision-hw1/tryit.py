@@ -32,3 +32,11 @@ sharpen = convolve_image(im, f, 1)
 image_abs(sharpen)
 # image_normalize(sharpen)
 save_image(sharpen, "dog-sharpen")
+
+
+im = load_image("data/dog.jpg")
+f = make_emboss_filter()
+emboss = convolve_image(im, f, 1)
+image_abs(emboss)
+# image_normalize(emboss)
+save_image(emboss, "dog-emboss")
